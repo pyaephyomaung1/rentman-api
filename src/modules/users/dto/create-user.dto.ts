@@ -1,11 +1,4 @@
-import {
-  IsEmail,
-  IsEnum,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
-import { Role } from 'src/common/enums/role';
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -23,7 +16,4 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   profileImageUrl: string;
-
-  @IsEnum(Role)
-  role: Role;
 }

@@ -22,7 +22,7 @@ export class User {
   })
   username: string;
 
-  @Column()
+  @Column({})
   password: string;
 
   @Column()
