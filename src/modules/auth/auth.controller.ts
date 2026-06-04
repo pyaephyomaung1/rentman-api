@@ -1,4 +1,17 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -19,7 +32,7 @@ export class AuthController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  profile(@Request() req){
+  profile(@Request() req) {
     return req.user;
   }
 }
