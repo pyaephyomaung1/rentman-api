@@ -12,6 +12,7 @@ import { Roles } from 'src/common/decorators/role-decorator';
 import { Role } from 'src/common/enums/role';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/role.guard';
+import { JwtStrategy } from '../auth/strategies/jwt.strategy';
 
 @Controller('workspace')
 export class WorkspaceController {
@@ -31,5 +32,17 @@ export class WorkspaceController {
   findMyWorkspace(@Request() req) {
     const id = req.user.id as number;
     return this.workspaceService.findMyWorkspace(id);
+  }
+
+  @Get()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtStrategy)
+  findAllWorkspaces() {
+    return this.workspaceService.getAll();
+  }
+
+  @Get('pending')
+  findPendingWorkspaces() {
+    return this.workspaceService.findPendingWorkspaces();
   }
 }

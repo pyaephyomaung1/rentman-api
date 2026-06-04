@@ -18,6 +18,17 @@ export class WorkspaceService {
     private readonly userService: UsersService,
   ) {}
 
+  async getAll() {
+    return await this.workspaceRepository.find();
+  }
+
+  async findPendingWorkspaces() {
+    return await this.workspaceRepository.findOne({
+      where: {
+        status: WorkspaceStatus.PENDING,
+      },
+    });
+  }
   async create(ownerId: number, workspaceDto: CreateWorkspaceDto) {
     const owner = await this.userService.findById(ownerId);
     if (!owner) {
