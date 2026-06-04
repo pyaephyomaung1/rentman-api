@@ -1,4 +1,11 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { WorkspaceService } from './workspace.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { Roles } from 'src/common/decorators/role-decorator';
@@ -14,6 +21,15 @@ export class WorkspaceController {
   @Roles(Role.STORE_OWNER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   create(@Request() req, @Body() workspaceDto: CreateWorkspaceDto) {
-    return this.workspaceService.create(req.user.id, workspaceDto);
+    const id = req.user.id as number;
+    return this.workspaceService.create(id, workspaceDto);
+  }
+
+  @Get('me')
+  @Roles(Role.STORE_OWNER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  findMyWorkspace(@Request() req) {
+    const id = req.user.id as number;
+    return this.workspaceService.findMyWorkspace(id);
   }
 }

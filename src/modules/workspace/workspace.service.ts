@@ -40,4 +40,17 @@ export class WorkspaceService {
     });
     return this.workspaceRepository.save(workspace);
   }
+
+  async findMyWorkspace(ownerId: number) {
+    return this.workspaceRepository.findOne({
+      where: {
+        owner: {
+          id: ownerId,
+        },
+      },
+      relations: {
+        owner: true,
+      },
+    });
+  }
 }
