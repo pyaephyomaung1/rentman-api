@@ -27,6 +27,9 @@ export class WorkspaceService {
       where: {
         status: WorkspaceStatus.PENDING,
       },
+      relations: {
+        owner: true,
+      },
     });
   }
   async create(ownerId: number, workspaceDto: CreateWorkspaceDto) {
