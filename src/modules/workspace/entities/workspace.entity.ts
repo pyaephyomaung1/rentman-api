@@ -39,6 +39,11 @@ export class Workspace {
   })
   rejectedReason: string;
 
+  @Column({
+    nullable: true,
+  })
+  banReason: string;
+
   @OneToOne(() => User, (user) => user.workspace)
   @JoinColumn()
   owner: User;

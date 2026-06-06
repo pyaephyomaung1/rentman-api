@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   Request,
   UseGuards,
@@ -13,6 +14,7 @@ import { Role } from 'src/common/enums/role';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/role.guard';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
+import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 
 @Controller('workspace')
 export class WorkspaceController {
@@ -24,6 +26,22 @@ export class WorkspaceController {
   create(@Request() req, @Body() workspaceDto: CreateWorkspaceDto) {
     const id = req.user.id as number;
     return this.workspaceService.create(id, workspaceDto);
+  }
+
+  @Patch('me')
+  @Roles(Role.STORE_OWNER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  update(@Request() req, @Body() updateWorkspaceDto: UpdateWorkspaceDto) {
+    const id = req.user.id as number;
+    return this.workspaceService.update(id, updateWorkspaceDto);
+  }
+
+  @Post('me/resubmit')
+  @Roles(Role.STORE_OWNER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  resubmite(@Request() req) {
+    const id = req.user.id as number;
+    return this.workspaceService.resubmit(id);
   }
 
   @Get('me')
