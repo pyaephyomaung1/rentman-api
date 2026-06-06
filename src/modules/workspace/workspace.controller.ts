@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import {
   Body,
   Controller,
@@ -13,7 +19,6 @@ import { Roles } from 'src/common/decorators/role-decorator';
 import { Role } from 'src/common/enums/role';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/role.guard';
-import { JwtStrategy } from '../auth/strategies/jwt.strategy';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 
 @Controller('workspace')
@@ -52,15 +57,11 @@ export class WorkspaceController {
     return this.workspaceService.findMyWorkspace(id);
   }
 
+  //admin
   @Get()
   @Roles(Role.ADMIN)
-  @UseGuards(JwtStrategy)
-  findAllWorkspaces() {
-    return this.workspaceService.getAll();
-  }
-
-  @Get('pending')
-  findPendingWorkspaces() {
-    return this.workspaceService.findPendingWorkspaces();
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  findAll() {
+    return this.workspaceService.findAll();
   }
 }

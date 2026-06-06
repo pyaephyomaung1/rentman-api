@@ -27,6 +27,20 @@ export class UsersService {
     });
   }
 
+  async findByEmailWithPassword(email: string) {
+    return this.userRepository.findOne({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        role: true,
+      },
+    });
+  }
+
   async findByUsername(username: string) {
     return this.userRepository.findOne({
       where: {

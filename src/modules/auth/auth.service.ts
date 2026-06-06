@@ -17,9 +17,7 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const existingEmail = await this.userService.findByUsername(
-      registerDto.email,
-    );
+    const existingEmail = await this.userService.findByEmail(registerDto.email);
     if (existingEmail) {
       throw new ConflictException('Email already exists.');
     }
@@ -37,7 +35,7 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto) {
-    const user = await this.userService.findByEmail(loginDto.email);
+    const user = await this.userService.findByEmailWithPassword(loginDto.email);
     if (!user) {
       throw new UnauthorizedException('Invalid Credentials.');
     }

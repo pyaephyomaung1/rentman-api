@@ -20,20 +20,7 @@ export class WorkspaceService {
     private readonly userService: UsersService,
   ) {}
 
-  async getAll() {
-    return await this.workspaceRepository.find();
-  }
-
-  async findPendingWorkspaces() {
-    return await this.workspaceRepository.findOne({
-      where: {
-        status: WorkspaceStatus.PENDING,
-      },
-      relations: {
-        owner: true,
-      },
-    });
-  }
+  //for store_owner
   async create(ownerId: number, workspaceDto: CreateWorkspaceDto) {
     const owner = await this.userService.findById(ownerId);
     if (!owner) {
@@ -99,5 +86,14 @@ export class WorkspaceService {
     workspace.rejectedReason = '';
 
     return this.workspaceRepository.save(workspace);
+  }
+
+  // for admins
+  async findAll() {
+    return this.workspaceRepository.find({
+      relations: {
+        owner: true,
+      },
+    });
   }
 }
