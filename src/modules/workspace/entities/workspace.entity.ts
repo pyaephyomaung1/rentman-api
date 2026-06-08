@@ -12,7 +12,7 @@ import {
 
 @Entity('workspace')
 export class Workspace {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -23,6 +23,12 @@ export class Workspace {
 
   @Column()
   region: string;
+
+  @Column()
+  logoUrl: string;
+
+  @Column()
+  phoneNumber: string;
 
   @Column()
   address: string;

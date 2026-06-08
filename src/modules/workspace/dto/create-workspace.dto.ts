@@ -8,6 +8,12 @@ export class CreateWorkspaceDto {
   country: string;
 
   @IsString()
+  logoUrl: string;
+
+  @IsString()
+  phoneNumber: string;
+
+  @IsString()
   region: string;
 
   @IsString()

@@ -29,7 +29,7 @@ export class WorkspaceController {
   @Roles(Role.STORE_OWNER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   create(@Request() req, @Body() workspaceDto: CreateWorkspaceDto) {
-    const id = req.user.id as number;
+    const id = req.user.id as string;
     return this.workspaceService.create(id, workspaceDto);
   }
 
@@ -37,7 +37,7 @@ export class WorkspaceController {
   @Roles(Role.STORE_OWNER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   update(@Request() req, @Body() updateWorkspaceDto: UpdateWorkspaceDto) {
-    const id = req.user.id as number;
+    const id = req.user.id as string;
     return this.workspaceService.update(id, updateWorkspaceDto);
   }
 
@@ -45,7 +45,7 @@ export class WorkspaceController {
   @Roles(Role.STORE_OWNER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   resubmite(@Request() req) {
-    const id = req.user.id as number;
+    const id = req.user.id as string;
     return this.workspaceService.resubmit(id);
   }
 
@@ -53,7 +53,7 @@ export class WorkspaceController {
   @Roles(Role.STORE_OWNER)
   @UseGuards(JwtAuthGuard, RolesGuard)
   findMyWorkspace(@Request() req) {
-    const id = req.user.id as number;
+    const id = req.user.id as string;
     return this.workspaceService.findMyWorkspace(id);
   }
 

@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
-import { Role } from 'src/common/enums/role';
 
 @Injectable()
 export class UsersService {
@@ -11,7 +10,7 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  async findById(id: number) {
+  async findById(id: string) {
     return this.userRepository.findOne({
       where: {
         id,
@@ -50,10 +49,7 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create({
-      ...createUserDto,
-      role: Role.STORE_OWNER,
-    });
+    const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
 

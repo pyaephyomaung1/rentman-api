@@ -21,7 +21,7 @@ export class WorkspaceService {
   ) {}
 
   //for store_owner
-  async create(ownerId: number, workspaceDto: CreateWorkspaceDto) {
+  async create(ownerId: string, workspaceDto: CreateWorkspaceDto) {
     const owner = await this.userService.findById(ownerId);
     if (!owner) {
       throw new NotFoundException('User not found');
@@ -44,7 +44,7 @@ export class WorkspaceService {
     return this.workspaceRepository.save(workspace);
   }
 
-  async findMyWorkspace(ownerId: number) {
+  async findMyWorkspace(ownerId: string) {
     return this.workspaceRepository.findOne({
       where: {
         owner: {
@@ -57,7 +57,7 @@ export class WorkspaceService {
     });
   }
 
-  async update(ownerId: number, updateWorkspaceDto: UpdateWorkspaceDto) {
+  async update(ownerId: string, updateWorkspaceDto: UpdateWorkspaceDto) {
     const workspace = await this.findMyWorkspace(ownerId);
     if (!workspace) {
       throw new NotFoundException("You don't have workspace to update");
@@ -69,7 +69,7 @@ export class WorkspaceService {
     return this.workspaceRepository.save(workspace);
   }
 
-  async resubmit(ownerId: number) {
+  async resubmit(ownerId: string) {
     const workspace = await this.findMyWorkspace(ownerId);
     if (!workspace) {
       throw new NotFoundException('Workspace not found');
