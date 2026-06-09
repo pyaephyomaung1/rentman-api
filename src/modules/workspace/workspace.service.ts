@@ -96,4 +96,19 @@ export class WorkspaceService {
       },
     });
   }
+
+  async findOne(id: string) {
+    const workspace = await this.workspaceRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        owner: true,
+      },
+    });
+    if (!workspace) {
+      throw new NotFoundException('Workspace not found');
+    }
+    return workspace;
+  }
 }

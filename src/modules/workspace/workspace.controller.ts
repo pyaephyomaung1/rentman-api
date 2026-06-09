@@ -8,6 +8,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   Post,
   Request,
@@ -63,5 +64,12 @@ export class WorkspaceController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   findAll() {
     return this.workspaceService.findAll();
+  }
+
+  @Get(':id')
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  findOne(@Param('id') id: string) {
+    return this.workspaceService.findOne(id);
   }
 }
